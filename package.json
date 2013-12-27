@@ -1,0 +1,29 @@
+{
+  "name": "koa-redis",
+  "description": "koa session with redis",
+  "repository": "dead-horse/koa-redis",
+  "version": "0.0.1",
+  "keywords": ["koa", "middleware", "session", "redis"],
+  "author": "dead_horse <dead_horse@qq.com>",
+  "files": ["index.js"],
+  "dependencies": {
+    "co-redis": "0.0.2",
+    "debug": "0.7.4",
+    "redis": "0.10.0"
+  },
+  "devDependencies": {
+    "blanket": "*",
+    "contributors": "*",
+    "coveralls": "*",
+    "koa": "0.1.2",
+    "mocha": "*",
+    "mocha-lcov-reporter": "*",
+    "should": "*",
+    "supertest": "0.8.2",
+    "travis-cov": "*"
+  },
+  "engines": {
+    "node": ">= 0.11.9"
+  },
+  "license": "MIT"
+}
