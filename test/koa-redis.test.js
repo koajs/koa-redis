@@ -13,19 +13,18 @@
  * Module dependencies.
  */
 
-var Session = require('../');
-var koa = require('koa');
+var store = require('../')();
 var should = require('should');
+var co = require('co');
 
-var session;
-
-describe('lib/koa-redis', function () {
-
-  describe('generate client', function () {
-    it('should generate session ok without client', function () {
-      session = Session();
-      session.should.be.a.Function;
-      session.constructor.name.should.equal('GeneratorFunction');
+describe('test/lib/koa-redis.test.js', function () {
+  describe('set()', function () {
+    it('should set ok', function (done) {
+      co(function *() {
+        yield store.set('key', {a: 1});
+        (yield store.get('key')).should.eql({a: 1});
+        done();
+      })();
     });
   });
 });
