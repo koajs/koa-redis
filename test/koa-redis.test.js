@@ -18,13 +18,42 @@ var should = require('should');
 var co = require('co');
 
 describe('test/lib/koa-redis.test.js', function () {
-  describe('set()', function () {
-    it('should set ok', function (done) {
-      co(function *() {
-        yield store.set('key', {a: 1});
-        (yield store.get('key')).should.eql({a: 1});
-        done();
-      })();
-    });
+  it('should set ok', function (done) {
+    co(function *() {
+      yield store.set('key', {a: 1});
+      (yield store.get('key')).should.eql({a: 1});
+      (yield store.client.ttl(store.prefix + 'key')).should.equal(86400);
+      done();
+    })();
+  });
+
+  it('should destroy ok', function (done) {
+    co(function *() {
+      yield store.destroy('key');
+      should.not.exist(yield store.get('key'));
+      done();
+    })();
+  });
+
+  it('should set with cookie.maxAge ok', function (done) {
+    co(function *() {
+      yield store.set('key', {a: 1, cookie: {maxAge: 1000}});
+      (yield store.get('key')).should.eql({a: 1, cookie: {maxAge: 1000}});
+      (yield store.client.ttl(store.prefix + 'key')).should.equal(1);
+      done();
+    })();
+  });
+
+  it('should expire after 2s', function (done) {
+    co(function *() {
+      function sleep(t) {
+        return function (done) {
+          setTimeout(done, t);
+        }
+      }
+      yield sleep(1000);
+      should.not.exist(yield store.get('key'));
+      done();
+    })();
   });
 });
