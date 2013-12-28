@@ -2,7 +2,7 @@
   "name": "koa-redis",
   "description": "koa session with redis",
   "repository": "dead-horse/koa-redis",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "keywords": ["koa", "middleware", "session", "redis"],
   "author": "dead_horse <dead_horse@qq.com>",
   "dependencies": {
