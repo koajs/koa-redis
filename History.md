@@ -1,4 +1,12 @@
 
+0.0.3 / 2013-12-29 
+==================
+
+  * refine travis.yml, use cnpmjs
+  * fix test, add co to devDependencies
+  * fix readme
+  * add benchmark test
+
 0.0.2 / 2013-12-29 
 ==================
 
