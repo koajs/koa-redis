@@ -38,15 +38,26 @@ app.listen(8080);
 ### Options
 
 ```
- * {String} prefix    session prefix
+ * {String} prefix    session prefix, defaulting to `koa:sass:`
  * {String} pass      redis password
  * {Object} client    redis client
  * {String} host      redis connect host (with out options.client)
  * {Number} port      redis connect port (with out options.client)
  * {String} socket    redis connect socket (with out options.client)
  * {String} db        redis db
- * {Number} ttl       redis ttl, defaulting to session.cookie.maxAge or oneDay
+ * {Number} ttl       redis ttl(seconds), defaulting to session.cookie.maxAge / 1000 or oneDay
 ```
+
+## Benchmark  
+
+|Server|Transaction rate|Response time|
+|------|----------------|-------------|
+|connect without session|**6763.56 trans/sec**|**0.01 secs**|
+|koa without session|**5684.75 trans/sec**|**0.01 secs**|
+|connect with session|**2759.70 trans/sec**|**0.02 secs**|
+|koa with session|**2355.38 trans/sec**|**0.02 secs**|
+
+Detail [benchmark report](https://github.com/dead-horse/koa-redis/tree/master/benchmark) here
 
 ## Licences
 (The MIT License)
