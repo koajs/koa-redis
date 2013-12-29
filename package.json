@@ -20,7 +20,8 @@
     "should": "*",
     "supertest": "0.8.2",
     "travis-cov": "*",
-    "koa-sess": "latest"
+    "koa-sess": "latest",
+    "co": "3.0.1"
   },
   "engines": {
     "node": ">= 0.11.9"
