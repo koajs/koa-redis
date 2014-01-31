@@ -14,13 +14,13 @@
     "blanket": "*",
     "contributors": "*",
     "coveralls": "*",
-    "koa": "latest",
+    "koa": "*",
     "mocha": "*",
     "mocha-lcov-reporter": "*",
     "should": "*",
     "supertest": "0.8.2",
     "travis-cov": "*",
-    "koa-sess": "latest",
+    "koa-sess": "*",
     "co": "3.0.1"
   },
   "engines": {
