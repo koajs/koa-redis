@@ -5,7 +5,7 @@ Redis storage for koa session middleware / cache.
 
 [![NPM](https://nodei.co/npm/koa-redis.png?downloads=true)](https://nodei.co/npm/koa-redis/)
 
-## Usage  
+## Usage
 
 `koa-redis` works with [koa-sess](https://npmjs.org/package/koa-sess)(a session middleware for koa).
 
@@ -49,7 +49,7 @@ app.listen(8080);
                       when set to null, will disable expires
 ```
 
-## Benchmark  
+## Benchmark
 
 |Server|Transaction rate|Response time|
 |------|----------------|-------------|
@@ -59,6 +59,23 @@ app.listen(8080);
 |koa with session|**2355.38 trans/sec**|**0.02 secs**|
 
 Detail [benchmark report](https://github.com/dead-horse/koa-redis/tree/master/benchmark) here
+
+## Authors
+
+```
+$ git summary
+
+ project  : koa-redis
+ repo age : 6 weeks ago
+ commits  : 27
+ active   : 9 days
+ files    : 16
+ authors  :
+    20  dead_horse              74.1%
+     3  Jesse Yang              11.1%
+     3  sipajahava              11.1%
+     1  Alessandro Lensi        3.7%
+```
 
 ## Licences
 (The MIT License)

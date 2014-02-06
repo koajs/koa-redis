@@ -6,22 +6,23 @@
   "keywords": ["koa", "middleware", "session", "redis"],
   "author": "dead_horse <dead_horse@qq.com>",
   "dependencies": {
-    "co-redis": "0.0.2",
+    "co-redis": "1.1.0",
     "debug": "0.7.4",
     "redis": "0.10.0"
   },
   "devDependencies": {
+    "autod": "~0.1.0",
     "blanket": "*",
+    "co": "3.0.2",
     "contributors": "*",
     "coveralls": "*",
     "koa": "*",
+    "koa-sess": "*",
     "mocha": "*",
     "mocha-lcov-reporter": "*",
-    "should": "*",
+    "should": "3.1.2",
     "supertest": "0.8.2",
-    "travis-cov": "*",
-    "koa-sess": "*",
-    "co": "3.0.1"
+    "travis-cov": "*"
   },
   "engines": {
     "node": ">= 0.11.9"

@@ -6,7 +6,7 @@ lib-cov
 *.out
 *.pid
 *.gz
-
+dump.rdb
 pids
 logs
 results
