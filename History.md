@@ -1,4 +1,15 @@
 
+0.0.5 / 2014-02-06
+==================
+
+  * add autod, update authors
+  * Merge pull request #4 from ktmud/master
+  * use setex
+  * more resonable debug
+  * Merge pull request #3 from nomadster/patch-1
+  * allow ttl to be null
+  * Fixed prefix: typo
+
 0.0.4 / 2014-02-01
 ==================
 
