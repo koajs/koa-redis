@@ -1,13 +1,13 @@
 koa-redis [![Build Status](https://secure.travis-ci.org/dead-horse/koa-redis.png)](http://travis-ci.org/dead-horse/koa-redis) [![Coverage Status](https://coveralls.io/repos/dead-horse/koa-redis/badge.png)](https://coveralls.io/r/dead-horse/koa-redis) [![Dependency Status](https://gemnasium.com/dead-horse/koa-redis.png)](https://gemnasium.com/dead-horse/koa-redis)
 =========
 
-koa session with redis
+Redis storage for koa session middleware / cache.
 
 [![NPM](https://nodei.co/npm/koa-redis.png?downloads=true)](https://nodei.co/npm/koa-redis/)
 
 ## Usage  
 
-`koa-redis` work with [koa-sess](https://npmjs.org/package/koa-sess)(a session middleware for koa).
+`koa-redis` works with [koa-sess](https://npmjs.org/package/koa-sess)(a session middleware for koa).
 
 ### Example
 
@@ -46,6 +46,7 @@ app.listen(8080);
  * {String} socket    redis connect socket (without options.client)
  * {String} db        redis db
  * {Number} ttl       redis ttl(seconds), defaulting to session.cookie.maxAge / 1000 or oneDay
+                      when set to null, will disable expires
 ```
 
 ## Benchmark  

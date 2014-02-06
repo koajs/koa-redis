@@ -17,7 +17,7 @@ var store = require('../')();
 var should = require('should');
 var co = require('co');
 
-describe('test/lib/koa-redis.test.js', function () {
+describe('test/koa-redis.test.js', function () {
   it('should set ok', function (done) {
     co(function *() {
       yield store.set('key', {a: 1});

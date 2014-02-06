@@ -1,4 +1,4 @@
-TESTS = find test/*.test.js
+TESTS = `find test/*.test.js`
 REPORTER = spec
 TIMEOUT = 5000
 MOCHA_OPTS =
