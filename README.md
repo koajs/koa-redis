@@ -38,15 +38,12 @@ app.listen(8080);
 ### Options
 
 ```
- * {String} prefix    session prefix, defaulting to `koa:sass:`
- * {String} pass      redis password
  * {Object} client    redis client
  * {String} host      redis connect host (without options.client)
  * {Number} port      redis connect port (without options.client)
  * {String} socket    redis connect socket (without options.client)
  * {String} db        redis db
- * {Number} ttl       redis ttl(seconds), defaulting to session.cookie.maxAge / 1000 or oneDay
-                      when set to null, will disable expires
+ * {String} pass      redis password
 ```
 
 ## Benchmark
