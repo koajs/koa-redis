@@ -18,53 +18,36 @@ var should = require('should');
 var co = require('co');
 
 describe('test/koa-redis.test.js', function () {
-  it('should set ok', function (done) {
+  it('should set with ttl ok', function (done) {
     co(function *() {
-      yield store.set('key', {a: 1});
-      (yield store.get('key')).should.eql({a: 1});
-      (yield store.client.ttl(store.prefix + 'key')).should.equal(86400);
+      yield store.set('key:ttl', {a: 1}, 86400000);
+      (yield store.get('key:ttl')).should.eql({a: 1});
+      (yield store.client.ttl('key:ttl')).should.equal(86400);
       done();
     })();
   });
 
+  it('should set without ttl ok', function (done) {
+    co(function *() {
+      yield store.set('key:nottl', {a: 1});
+      (yield store.get('key:nottl')).should.eql({a: 1});
+      (yield store.client.ttl('key:nottl')).should.equal(-1);
+      done();
+    })();
+  });
   it('should destroy ok', function (done) {
     co(function *() {
-      yield store.destroy('key');
-      should.not.exist(yield store.get('key'));
+      yield store.destroy('key:nottl');
+      yield store.destroy('key:ttl');
+      should.not.exist(yield store.get('key:nottl'));
+      should.not.exist(yield store.get('key:ttl'));
       done();
     })();
   });
 
-  it('should set with cookie.maxAge ok', function (done) {
+  it('should expire after 1s', function (done) {
     co(function *() {
-      yield store.set('key', {a: 1, cookie: {maxAge: 1000}});
-      (yield store.get('key')).should.eql({a: 1, cookie: {maxAge: 1000}});
-      (yield store.client.ttl(store.prefix + 'key')).should.equal(1);
-      done();
-    })();
-  });
-
-  it('should set with cookie.maxage ok', function (done) {
-    co(function *() {
-      yield store.set('key', {a: 1, cookie: {maxage: 1000}});
-      (yield store.get('key')).should.eql({a: 1, cookie: {maxage: 1000}});
-      (yield store.client.ttl(store.prefix + 'key')).should.equal(1);
-      done();
-    })();
-  });
-
-  it('should set with cookie.expires ok', function (done) {
-    co(function *() {
-      var expires = new Date(Date.now() + 1000);
-      yield store.set('key', {a: 1, cookie: {expires: expires}});
-      (yield store.get('key')).should.eql({a: 1, cookie: {expires: expires}});
-      (yield store.client.ttl(store.prefix + 'key')).should.equal(1);
-      done();
-    })();
-  });
-
-  it('should expire after 2s', function (done) {
-    co(function *() {
+      yield store.set('key', {a: 1}, 1000);
       function sleep(t) {
         return function (done) {
           setTimeout(done, t);

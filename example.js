@@ -21,9 +21,7 @@ var redisStore = require('./');
 var app = koa();
 
 app.name = 'koa-session-test';
-app.outputErrors = true;
 app.keys = ['keys', 'keykeys'];
-app.proxy = true; // to support `X-Forwarded-*` header
 
 app.use(session({
   store: redisStore()
