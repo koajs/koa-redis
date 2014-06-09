@@ -33,7 +33,7 @@ contributors: install
 	@./node_modules/contributors/bin/contributors -f plain -o AUTHORS
 
 autod: install
-	@./node_modules/.bin/autod -w -e example.js,benchmark
+	@./node_modules/.bin/autod -w -e example.js,benchmark --prefix='~'
 	@$(MAKE) install
 
 .PHONY: test
