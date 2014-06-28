@@ -1,5 +1,5 @@
 var koa = require('koa');
-var session = require('koa-sess');
+var session = require('koa-generic-session');
 var redisStore = require('../');
 
 var app = koa();

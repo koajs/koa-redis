@@ -7,7 +7,7 @@
   "author": "dead_horse <dead_horse@qq.com>",
   "dependencies": {
     "co-redis": "~1.1.0",
-    "debug": "~1.0.1",
+    "debug": "~1.0.2",
     "redis": "~0.10.3"
   },
   "devDependencies": {
@@ -17,10 +17,10 @@
     "contributors": "*",
     "coveralls": "*",
     "koa": "~0.7.0",
-    "koa-sess": "0.1.0-beta1",
+    "koa-generic-session": "~1.0.0",
     "mocha": "*",
     "mocha-lcov-reporter": "*",
-    "should": "~4.0.1",
+    "should": "~4.0.4",
     "supertest": "0.8.2",
     "travis-cov": "*"
   },

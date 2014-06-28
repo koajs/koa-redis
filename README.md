@@ -7,14 +7,14 @@ Redis storage for koa session middleware / cache.
 
 ## Usage
 
-`koa-redis` works with [koa-sess](https://npmjs.org/package/koa-sess)(a session middleware for koa).
+`koa-redis` works with [koa-generic-session](https://github.com/koajs/generic-session)(a generic session middleware for koa).
 
 ### Example
 
 ```javascript
 var koa = require('koa');
 var http = require('http');
-var session = require('koa-sess');
+var session = require('koa-generic-session');
 var redisStore = require('koa-redis');
 
 var app = koa();
@@ -63,15 +63,15 @@ Detail [benchmark report](https://github.com/dead-horse/koa-redis/tree/master/be
 $ git summary
 
  project  : koa-redis
- repo age : 6 weeks ago
- commits  : 27
- active   : 9 days
+ repo age : 6 months ago
+ commits  : 34
+ active   : 11 days
  files    : 16
  authors  :
-    20  dead_horse              74.1%
-     3  Jesse Yang              11.1%
-     3  sipajahava              11.1%
-     1  Alessandro Lensi        3.7%
+    27  dead_horse              79.4%
+     3  Jesse Yang              8.8%
+     3  sipajahava              8.8%
+     1  Alessandro Lensi        2.9%
 ```
 
 ## Licences
