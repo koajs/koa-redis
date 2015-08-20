@@ -4,6 +4,7 @@
   "repository": "dead-horse/koa-redis",
   "version": "1.0.0",
   "keywords": ["koa", "middleware", "session", "redis"],
+  "files": "index.js",
   "author": "dead_horse <dead_horse@qq.com>",
   "dependencies": {
     "co-redis": "~1.1.0",
