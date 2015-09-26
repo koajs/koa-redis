@@ -46,6 +46,12 @@ app.listen(8080);
  * {String} pass      redis password
 ```
 
+### Events
+
+`connect` Redis client connected succesfully.
+
+`disconnect` Redis client was disconnected
+
 ## Benchmark
 
 |Server|Transaction rate|Response time|
