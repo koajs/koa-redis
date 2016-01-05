@@ -3,9 +3,8 @@ node_js:
   - "4"
   - "5"
 sudo: false
+install: npm install
 script: make test-coveralls
-install:
-  - make install
 services:
   - redis-server
 env:
