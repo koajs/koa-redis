@@ -10,7 +10,8 @@
   "main": "./index.js",
   "scripts": {
     "test": "istanbul cover node_modules/mocha/bin/_mocha -- \"test/**/*.test.js\"",
-    "test-only": "mocha \"test/**/*.test.js\""
+    "test-only": "mocha \"test/**/*.test.js\"",
+    "autod": "autod -w -e example --prefix=~ --keep=debug, --semver=koa@1"
   },
   "keywords": [
     "koa",
@@ -28,7 +29,8 @@
     "mocha": "*",
     "istanbul": "*",
     "co": "4.6.*",
-    "should": "*"
+    "should": "*",
+    "autod": "*"
   },
   "optionalDependencies": {
     "hiredis": "0.4.*"
