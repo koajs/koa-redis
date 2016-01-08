@@ -26,11 +26,11 @@
     "redis": "2.4.*"
   },
   "devDependencies": {
-    "mocha": "*",
+    "autod": "*",
+    "co-mocha": "*",
     "istanbul": "*",
-    "co": "4.6.*",
-    "should": "*",
-    "autod": "*"
+    "mocha": "*",
+    "should": "*"
   },
   "optionalDependencies": {
     "hiredis": "0.4.*"
