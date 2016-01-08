@@ -21,7 +21,7 @@
   ],
   "author": "dead_horse <dead_horse@qq.com>",
   "dependencies": {
-    "co-redis": "2.0.*",
+    "co-redis": "~2.0.0",
     "debug": "*",
     "redis": "2.4.*"
   },
