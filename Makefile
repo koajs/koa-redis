@@ -1,44 +1,14 @@
-TESTS = `find test/*.test.js`
-REPORTER = spec
-TIMEOUT = 5000
-MOCHA_OPTS =
-
 install:
-	npm install
+	npm i
 
 test:
-	NODE_ENV=test ./node_modules/mocha/bin/mocha \
-		--harmony\
-		--reporter $(REPORTER) \
-		--timeout $(TIMEOUT) \
-		--require should \
-		$(MOCHA_OPTS) \
-		$(TESTS)
+	NODE_ENV=test npm test
 
-
-test-cov:
-	NODE_ENV=test node --harmony \
-		node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha \
-		-- -u exports \
-		--reporter $(REPORTER) \
-		--timeout $(TIMEOUT) \
-		--require should \
-		$(MOCHA_OPTS) \
-		$(TESTS)
-
-test-travis:
-	NODE_ENV=test node --harmony \
-		node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha \
-		--report lcovonly \
-		-- -u exports \
-		--reporter $(REPORTER) \
-		--timeout $(TIMEOUT) \
-		--require should \
-		$(MOCHA_OPTS) \
-		$(TESTS)
+test-only:
+	NODE_ENV=test npm run-script test-only
 
 autod:
-	./node_modules/.bin/autod -w -e example --prefix=~ --keep=supertest,debug, --semver=koa@1
+	npm i autod && autod -w -e example --prefix=~ --keep=debug, --semver=koa@1
 	$(MAKE) install
 
 .PHONY: test

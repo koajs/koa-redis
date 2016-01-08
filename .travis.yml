@@ -3,8 +3,9 @@ node_js:
   - "4"
   - "5"
 sudo: false
-script: make test-travis
-after_script: npm install coveralls && cat ./coverage/lcov.info | coveralls
+after_script:
+ - npm i -g coveralls
+ - cat ./coverage/lcov.info | coveralls
 services:
   - redis-server
 env:

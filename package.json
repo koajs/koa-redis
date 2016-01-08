@@ -1,29 +1,40 @@
 {
   "name": "koa-redis",
-  "description": "koa session with redis",
-  "repository": "dead-horse/koa-redis",
+  "description": "koa session with redis using koa-generic-session",
+  "repository": "koajs/koa-redis",
+  "bugs": {
+    "url": "https://github.com/koajs/koa-redis/issues"
+  },
+  "homepage": "https://github.com/koajs/koa-redis",
   "version": "1.0.1",
-  "keywords": ["koa", "middleware", "session", "redis"],
-  "files": "index.js",
+  "main": "./index.js",
+  "scripts": {
+    "test": "istanbul cover node_modules/mocha/bin/_mocha -- \"test/**/*.test.js\"",
+    "test-only": "mocha \"test/**/*.test.js\""
+  },
+  "keywords": [
+    "koa",
+    "middleware",
+    "session",
+    "redis"
+  ],
   "author": "dead_horse <dead_horse@qq.com>",
   "dependencies": {
-    "co-redis": "~1.1.0",
+    "co-redis": "2.0.*",
     "debug": "*",
-    "redis": "~0.12.1"
+    "redis": "2.4.*"
   },
   "devDependencies": {
-    "autod": "~0.2.0",
-    "blanket": "*",
-    "co": "~3.0.6",
-    "istanbul": "*",
-    "koa": "~1.1.2",
-    "koa-generic-session": "~1.10.0",
     "mocha": "*",
-    "should": "~4.0.4",
-    "supertest": "0.8.2"
+    "istanbul": "*",
+    "co": "4.6.*",
+    "should": "*"
+  },
+  "optionalDependencies": {
+    "hiredis": "0.4.*"
   },
   "engines": {
-    "node": ">= 0.11.9"
+    "node": ">= 4"
   },
   "license": "MIT"
 }

@@ -10,6 +10,7 @@ dump.rdb
 pids
 logs
 results
+coverage
 
 npm-debug.log
 node_modules
