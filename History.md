@@ -1,5 +1,10 @@
 
-1.0.1 / 2015-08-20 
+2.0.0 / 2016-01-09
+==================
+
+  * update for new redis, update all deps, update tests and coverage, update docs
+
+1.0.1 / 2015-08-20
 ==================
 
   * make sure ttl is an integer, fixes #9
