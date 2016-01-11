@@ -4,10 +4,13 @@ node_js:
   - "5"
 sudo: false
 after_script:
- - npm i -g coveralls
- - cat ./coverage/lcov.info | coveralls
+ - npm i coveralls
+ - cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls
 services:
   - redis-server
+cache:
+  directories:
+    - node_modules
 env:
   - CXX=g++-4.8
 addons:
