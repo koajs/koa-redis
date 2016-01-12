@@ -7,7 +7,9 @@
   },
   "homepage": "https://github.com/koajs/koa-redis",
   "version": "2.0.0",
-  "files": ["./index.js"],
+  "files": [
+    "./index.js"
+  ],
   "scripts": {
     "test": "istanbul cover node_modules/mocha/bin/_mocha -- --require co-mocha \"test/**/*.test.js\"",
     "test-only": "mocha --require co-mocha \"test/**/*.test.js\"",
@@ -34,7 +36,7 @@
     "koa": "~1.1.2",
     "koa-generic-session": "~1.10.1",
     "mocha": "*",
-    "should": "~8.0.2"
+    "should": "~8.1.0"
   },
   "optionalDependencies": {
     "hiredis": "~0.4.1"
