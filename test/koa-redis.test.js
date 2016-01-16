@@ -14,7 +14,6 @@
  */
 
 var should = require('should');
-require('co-mocha');
 var redis = require('redis');
 var redisWrapper = require('co-redis');
 
@@ -48,14 +47,17 @@ describe('test/koa-redis.test.js', function () {
     store.connected.should.eql(false);
   });
 
-  it('should set with db ok', function* () {
+  it('should set and delete with db ok', function* () {
     var store = require('../')({db: 2});
     var client = redis.createClient();
     client.select(2);
     client = redisWrapper(client);
-    yield store.set('key:db1', {a: 1});
-    (yield store.get('key:db1')).should.eql({a: 1});
-    JSON.parse(yield client.get('key:db1')).should.eql({a: 1});
+    yield store.set('key:db1', {a: 2});
+    (yield store.get('key:db1')).should.eql({a: 2});
+    JSON.parse(yield client.get('key:db1')).should.eql({a: 2});
+    yield store.destroy('key:db1');
+    should.not.exist(yield store.get('key:db1'));
+    should.not.exist(yield client.get('key:db1'));
     yield store.quit();
   });
 
