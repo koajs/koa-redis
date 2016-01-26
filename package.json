@@ -35,7 +35,7 @@
     "istanbul": "~0.4.1",
     "koa": "~1.1.2",
     "koa-generic-session": "~1.10.1",
-    "mocha": "*",
+    "mocha": "2.4.1",
     "should": "~8.2.0"
   },
   "optionalDependencies": {
