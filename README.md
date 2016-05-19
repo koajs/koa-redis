@@ -105,8 +105,7 @@ See the [`node_redis` docs](https://www.npmjs.com/package/redis#connection-event
  - `reconnecting`
  - `error`
  - `end`
- - `drain`
- - `idle`
+ - `warning`
 
 ### API
 These are some the funcitons that `koa-generic-session` uses that you can use manually. You will need to inintialize differently than the example above:
@@ -139,7 +138,7 @@ Generator that destroys a session (removes it from Redis) by ID. Tields `node_re
 Generator that stops a Redis session after everything in the queue has completed. Yields `node_redis`'s `client.quit()`.
 
 #### session.end()
-Alias to `session.quit()`. It is not safe to use the real end function, as it cuts of the queue.
+Alias to `session.quit()`. It is not safe to use the real end function, as it cuts off the queue.
 
 #### session.connected
 Boolean giving the connection status updated using `client.connected` after any of the events above is fired.

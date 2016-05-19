@@ -72,8 +72,7 @@ var RedisStore = module.exports = function (options) {
   client.on('connect', this.emit.bind(this, 'connect'));
   client.on('reconnecting', this.emit.bind(this, 'reconnecting'));
   client.on('ready', this.emit.bind(this, 'ready'));
-  client.on('drain', this.emit.bind(this, 'drain'));
-  client.on('idle', this.emit.bind(this, 'idle'));
+  client.on('warning', this.emit.bind(this, 'warning'));
   this.on('connect', function() {
     debug('connected to redis');
     this.connected = client.connected;
@@ -97,12 +96,10 @@ var RedisStore = module.exports = function (options) {
     debug('redis reconnecting');
     this.connected = client.connected;
   });
-  this.on('drain', function() {
-    debug('redis drain');
-    this.connected = client.connected;
-  });
-  this.on('idle', function() {
-    debug('redis idle');
+  // No good way to test warning
+  /* istanbul ignore next */
+  this.on('warning', function() {
+    debug('redis warning');
     this.connected = client.connected;
   });
 
