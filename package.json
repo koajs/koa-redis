@@ -7,9 +7,7 @@
   },
   "homepage": "https://github.com/koajs/koa-redis",
   "version": "2.1.0",
-  "files": [
-    "./index.js"
-  ],
+  "main": "index.js",
   "scripts": {
     "test": "istanbul cover node_modules/mocha/bin/_mocha -- --require co-mocha \"test/**/*.test.js\"",
     "test-only": "mocha --require co-mocha \"test/**/*.test.js\"",
