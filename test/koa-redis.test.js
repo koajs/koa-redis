@@ -42,7 +42,7 @@ describe('test/koa-redis.test.js', function () {
     yield event(store, 'connect');
     store.connected.should.eql(true);
     yield event(store, 'ready');
-    yield store.end()
+    yield store.end(true)
     yield event(store, 'disconnect');
     store.connected.should.eql(false);
   });
