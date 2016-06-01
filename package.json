@@ -34,7 +34,7 @@
     "koa": "~1.2.0",
     "koa-generic-session": "~1.10.1",
     "mocha": "*",
-    "should": "~8.4.0"
+    "should": "~9.0.0"
   },
   "optionalDependencies": {
     "hiredis": "~0.4.1"
