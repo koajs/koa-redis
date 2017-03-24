@@ -111,8 +111,8 @@ var RedisStore = module.exports = function (options) {
 
 util.inherits(RedisStore, EventEmitter);
 
-RedisStore.prototype.get = function *(sid) {
-  var data = yield this.client.get(sid);
+RedisStore.prototype.get = async function get(sid) {
+  var data = await this.client.get(sid);
   debug('get session: %s', data || 'none');
   if (!data) {
     return null;
@@ -125,30 +125,30 @@ RedisStore.prototype.get = function *(sid) {
   }
 };
 
-RedisStore.prototype.set = function *(sid, sess, ttl) {
+RedisStore.prototype.set = async function set(sid, sess, ttl) {
   if (typeof ttl === 'number') {
     ttl = Math.ceil(ttl / 1000);
   }
   sess = JSON.stringify(sess);
   if (ttl) {
     debug('SETEX %s %s %s', sid, ttl, sess);
-    yield this.client.setex(sid, ttl, sess);
+    await this.client.setex(sid, ttl, sess);
   } else {
     debug('SET %s %s', sid, sess);
-    yield this.client.set(sid, sess);
+    await this.client.set(sid, sess);
   }
   debug('SET %s complete', sid);
 };
 
-RedisStore.prototype.destroy = function *(sid) {
+RedisStore.prototype.destroy = async function destroy(sid) {
   debug('DEL %s', sid);
-  yield this.client.del(sid);
+  await this.client.del(sid);
   debug('DEL %s complete', sid);
 };
 
-RedisStore.prototype.quit = function* () {                         // End connection SAFELY
+RedisStore.prototype.quit = async function quit() {                         // End connection SAFELY
   debug('quitting redis client');
-  yield this.client.quit();
+  await this.client.quit();
 };
 
 RedisStore.prototype.end = RedisStore.prototype.quit;              // End connection SAFELY. The real end() command should never be used, as it cuts off to queue.

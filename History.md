@@ -1,3 +1,8 @@
+3.0.0 / 2017-03-23
+==================
+
+  * support koa v2, convert generators/yield to async/await
+
 2.1.2 / 2016-08-04
 ==================
 

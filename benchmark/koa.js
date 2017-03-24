@@ -11,7 +11,7 @@ if (process.argv[2] !== 'nosession') {
   }));
 }
 
-app.use(function *() {
+app.use(async () => {
   this.session = this.session || {};
   this.session.name = 'koa-redis';
   this.body = this.session.name;
