@@ -31,7 +31,7 @@
     "connect": "~3.5.0",
     "connect-redis": "~3.1.0",
     "istanbul": "~0.4.5",
-    "koa": "~1.2.4",
+    "koa": "^2.2.0",
     "koa-generic-session": "~1.11.3",
     "mocha": "*",
     "should": "~11.1.1"
