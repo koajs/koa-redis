@@ -119,7 +119,12 @@ RedisStore.prototype.get = function *(sid) {
     return null;
   }
   try {
-    return JSON.parse(data.toString());
+    var sess = JSON.parse(data.toString());
+    //if ttl ,reset it
+    if(sess.ttl){
+      this.client.expire(sid,sess.ttl);
+    }
+    return sess.sess;
   } catch (err) {
     // ignore err
     debug('parse session error: %s', err.message);
@@ -133,6 +138,8 @@ RedisStore.prototype.set = function *(sid, sess, ttl) {
   sess = JSON.stringify(sess);
   if (ttl) {
     debug('SETEX %s %s %s', sid, ttl, sess);
+    //save ttl
+    sess = JSON.stringify({ttl:ttl,sess:sess});
     yield this.client.setex(sid, ttl, sess);
   } else {
     debug('SET %s %s', sid, sess);
