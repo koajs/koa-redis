@@ -135,7 +135,7 @@ RedisStore.prototype.set = function *(sid, sess, ttl) {
   if (typeof ttl === 'number') {
     ttl = Math.ceil(ttl / 1000);
   }
-  sess = JSON.stringify(sess);
+  // sess = JSON.stringify(sess);
   if (ttl) {
     debug('SETEX %s %s %s', sid, ttl, sess);
     //save ttl
@@ -143,6 +143,7 @@ RedisStore.prototype.set = function *(sid, sess, ttl) {
     yield this.client.setex(sid, ttl, sess);
   } else {
     debug('SET %s %s', sid, sess);
+    sess = JSON.stringify({sess:sess});
     yield this.client.set(sid, sess);
   }
   debug('SET %s complete', sid);
