@@ -54,7 +54,7 @@ describe('test/koa-redis.test.js', function () {
     client = redisWrapper(client);
     yield store.set('key:db1', {a: 2});
     (yield store.get('key:db1')).should.eql({a: 2});
-    JSON.parse(yield client.get('key:db1')).should.eql({a: 2});
+    JSON.parse(yield client.get('key:db1')).sess.should.eql({a: 2});
     yield store.destroy('key:db1');
     should.not.exist(yield store.get('key:db1'));
     should.not.exist(yield client.get('key:db1'));
