@@ -108,6 +108,10 @@ var RedisStore = module.exports = function (options) {
   this._redisClient = client;
   this.client = redisWrapper(client);
   this.connected = client.connected;
+
+  // support optional serialize and unserialize
+  this.serialize = options.serialize || JSON.stringify;
+  this.unserialize = options.unserialize || JSON.parse;
 };
 
 util.inherits(RedisStore, EventEmitter);
@@ -119,7 +123,7 @@ RedisStore.prototype.get = function *(sid) {
     return null;
   }
   try {
-    return JSON.parse(data.toString());
+    return this.unserialize(data.toString());
   } catch (err) {
     // ignore err
     debug('parse session error: %s', err.message);
@@ -130,7 +134,7 @@ RedisStore.prototype.set = function *(sid, sess, ttl) {
   if (typeof ttl === 'number') {
     ttl = Math.ceil(ttl / 1000);
   }
-  sess = JSON.stringify(sess);
+  sess = this.serialize(sess);
   if (ttl) {
     debug('SETEX %s %s %s', sid, ttl, sess);
     yield this.client.setex(sid, ttl, sess);
