@@ -96,6 +96,8 @@ For more examples, please see the [examples folder of `koa-generic-session`](htt
  - `db` (number) - will run `client.select(db)` after connection
  - `client` (object) - supply your own client, all other options are ignored unless `duplicate` is also supplied
  - `duplicate` (boolean) - When true, it will run `client.duplicate(options)` on the supplied `client` and use all other options supplied. This is useful if you want to select a different DB for sessions but also want to base from the same client object.
+ - `serialize` - Used to serialize the data that is saved into the store.
+ - `unserialize` - Used to unserialize the data that is fetched from the store.
  - **DEPRECATED:** old options - `pass` and `socket` have been replaced by `auth_pass` and `path`, but they should be backwards compatible (still work).
 
 ### Events
