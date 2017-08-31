@@ -110,8 +110,8 @@ var RedisStore = module.exports = function (options) {
   this.connected = client.connected;
 
   // support optional serialize and unserialize
-  this.serialize = options.serialize || JSON.stringify;
-  this.unserialize = options.unserialize || JSON.parse;
+  this.serialize = (typeof options.serialize === 'function' && options.serialize) || JSON.stringify;
+  this.unserialize = (typeof options.unserialize === 'function' && options.unserialize) || JSON.parse;
 };
 
 util.inherits(RedisStore, EventEmitter);

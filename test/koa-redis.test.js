@@ -76,6 +76,23 @@ describe('test/koa-redis.test.js', function () {
     yield store.quit();
   });
 
+  it('should use default JSON.parse/JSON.stringify without serialize/unserialize function', function* () {
+    var store = require('../')({serialize: 'Not a function', 'unserialize': 'Not a function'});
+    yield store.set('key:notserialized', {a: 1});
+    (yield store.get('key:notserialized')).should.eql({a: 1});
+    yield store.quit();
+  });
+
+  it('should parse bad JSON with custom unserialize function', function* () {
+    var store = require('../')({
+      serialize: (value) => ('JSON:' + JSON.stringify(value)), 
+      'unserialize': (value) => JSON.parse(value.slice(5))
+    });
+    yield store.set('key:notserialized', {a: 1});
+    (yield store.get('key:notserialized')).should.eql({a: 1});
+    yield store.quit();
+  });
+
   it('should set without ttl ok', function* () {
     var store = require('../')();
     yield store.set('key:nottl', {a: 1});
