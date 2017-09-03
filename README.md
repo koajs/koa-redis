@@ -98,7 +98,7 @@ For more examples, please see the [examples folder of `koa-generic-session`](htt
  - `duplicate` (boolean) - When true, it will run `client.duplicate(options)` on the supplied `client` and use all other options supplied. This is useful if you want to select a different DB for sessions but also want to base from the same client object.
  - `serialize` - Used to serialize the data that is saved into the store.
  - `unserialize` - Used to unserialize the data that is fetched from the store.
- - **DEPRECATED:** old options - `pass` and `socket` have been replaced by `auth_pass` and `path`, but they should be backwards compatible (still work).
+ - **DEPRECATED:** old options - `pass` and `socket` have been replaced by `auth_pass` and `path`, but they should be backward compatible (still work).
 
 ### Events
 See the [`node_redis` docs](https://www.npmjs.com/package/redis#connection-events) for more info.
@@ -110,7 +110,7 @@ See the [`node_redis` docs](https://www.npmjs.com/package/redis#connection-event
  - `warning`
 
 ### API
-These are some the funcitons that `koa-generic-session` uses that you can use manually. You will need to inintialize differently than the example above:
+These are some the functions that `koa-generic-session` uses that you can use manually. You will need to initialize differently than the example above:
 ```js
 var session = require('koa-generic-session');
 var redisStore = require('koa-redis')({
