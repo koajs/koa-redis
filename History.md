@@ -1,4 +1,12 @@
 
+3.1.0 / 2017-09-09
+==================
+
+  * feat: optional custom serialize and deserialize functions (#36)
+  * fix typos in readme (#37)
+  * update dependencies
+  * add node v8 to travis
+
 3.0.0 / 2017-04-17
 ==================
 
