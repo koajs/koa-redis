@@ -88,7 +88,11 @@ function *regenerate() {
 
 app.listen(8080);
 ```
-For more examples, please see the [examples folder of `koa-generic-session`](https://github.com/koajs/generic-session/tree/master/example).
+
+### More Examples
+
+1. Please see the [examples folder of `koa-generic-session`](https://github.com/koajs/generic-session/tree/master/example).
+1. Review the [User Authentication with Passport and Koa](http://mherman.org/blog/2018/01/02/user-authentication-with-passport-and-koa) blog post along with the subsequent [repo](https://github.com/mjhea0/node-koa-api).
 
 ### Options
 
