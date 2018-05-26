@@ -12,7 +12,8 @@
     "test": "nyc mocha --exit test/**/*.test.js",
     "test-only": "mocha --exit test/**/*.test.js",
     "autod": "autod -w --prefix=^ --keep=koa -D autod,coveralls,mocha,nyc",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "lint": "eslint *.js **/*.js"
   },
   "keywords": [
     "koa",
@@ -30,6 +31,8 @@
     "connect": "^3.6.6",
     "connect-redis": "^3.3.3",
     "coveralls": "^3.0.1",
+    "eslint": "^4.19.1",
+    "eslint-config-egg": "^7.0.0",
     "koa": "^2.3.0",
     "koa-session": "^5.8.1",
     "mocha": "^5.2.0",
