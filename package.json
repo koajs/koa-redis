@@ -9,9 +9,10 @@
   "version": "3.1.2",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha -- --require co-mocha \"test/**/*.test.js\"",
-    "test-only": "mocha --require co-mocha \"test/**/*.test.js\"",
-    "autod": "autod -w --prefix=^ --keep=koa -D co-mocha,mocha,istanbul,autod"
+    "test": "nyc mocha --exit test/**/*.test.js",
+    "test-only": "mocha --exit test/**/*.test.js",
+    "autod": "autod -w --prefix=^ --keep=koa -D autod,coveralls,mocha,nyc",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "koa",
@@ -25,15 +26,15 @@
     "redis": "^2.8.0"
   },
   "devDependencies": {
-    "autod": "^2.9.0",
-    "co-mocha": "^1.2.0",
-    "connect": "^3.6.3",
-    "connect-redis": "^3.3.0",
-    "istanbul": "^0.4.5",
+    "autod": "^3.0.1",
+    "connect": "^3.6.6",
+    "connect-redis": "^3.3.3",
+    "coveralls": "^3.0.1",
     "koa": "^2.3.0",
-    "mocha": "^3.5.0",
-    "should": "^13.0.1"
     "koa-session": "^5.8.1",
+    "mocha": "^5.2.0",
+    "nyc": "^11.8.0",
+    "should": "^13.2.1"
   },
   "optionalDependencies": {
     "hiredis": "~0.5.0"

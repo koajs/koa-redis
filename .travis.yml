@@ -1,14 +1,10 @@
 language: node_js
 node_js:
-  - "4"
-  - "6"
-  - "7"
   - "8"
-  - "node"
+  - "9"
+  - "10"
 sudo: false
-after_script:
- - npm i coveralls
- - cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls
+after_script: npm run coverage
 services:
   - redis-server
 cache:
