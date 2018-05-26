@@ -21,7 +21,7 @@ koa-redis@0.0.2
 ## Report
 
 ```
-siege -b -c 50 -t 1M 
+siege -b -c 50 -t 1M
 ```
 
 |Server|Transaction rate|Response time|
@@ -53,7 +53,7 @@ Successful transactions:      402229
 Failed transactions:             0
 Longest transaction:          0.03
 Shortest transaction:         0.00
- 
+
 #siege koa
 $ siege -b -c 50 -t 1M http://localhost:8080
 ** SIEGE 2.72

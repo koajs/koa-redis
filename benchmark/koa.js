@@ -1,20 +1,23 @@
-var koa = require('koa');
-var session = require('koa-generic-session');
-var redisStore = require('../');
+'use strict';
 
-var app = koa();
+const Koa = require('koa');
+const session = require('koa-session');
+const RedisStore = require('../');
 
-app.keys = ['keys', 'keykeys'];
+const app = new Koa();
+
+app.keys = [ 'keys', 'keykeys' ];
+
 if (process.argv[2] !== 'nosession') {
   app.use(session({
-    store: redisStore()
-  }));
+    store: new RedisStore(),
+  }, app));
 }
 
-app.use(function *() {
-  this.session = this.session || {};
-  this.session.name = 'koa-redis';
-  this.body = this.session.name;
+app.use(ctx => {
+  ctx.session = ctx.session || {};
+  ctx.session.name = 'koa-redis';
+  ctx.body = ctx.session.name;
 });
 
 require('http').createServer(app.callback()).listen(8080);

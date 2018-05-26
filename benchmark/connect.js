@@ -1,16 +1,19 @@
-var connect = require('connect');
-var RedisStore = require('connect-redis')(connect);
+'use strict';
 
-var app = connect();
+const connect = require('connect');
+const RedisStore = require('connect-redis')(connect);
+
+const app = connect();
 app.use(connect.cookieParser());
+
 if (process.argv[2] !== 'nosession') {
   app.use(connect.session({
     secret: 'session secret',
-    store: new RedisStore()
+    store: new RedisStore(),
   }));
 }
 
-app.use(function (req, res) {
+app.use((req, res) => {
   req.session = req.session || {};
   req.session.name = 'conncet-redis';
   res.end(req.session.name);
