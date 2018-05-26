@@ -1,5 +1,4 @@
-koa-redis
-=========
+# koa-redis
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -37,16 +36,16 @@ Redis storage for koa session middleware/cache.
 
 ## Usage
 
-`koa-redis` works with [koa-generic-session](https://github.com/koajs/generic-session) (a generic session middleware for koa).
+`koa-redis` works with [koa-session](https://github.com/koajs/session) (a generic session middleware for koa).
 
 ### Example
 
 ```js
-var session = require('koa-generic-session');
-var redisStore = require('koa-redis');
-var koa = require('koa');
+const session = require('koa-session');
+const redisStore = require('koa-redis');
+const koa = require('koa');
 
-var app = koa();
+const app = koa();
 app.keys = ['keys', 'keykeys'];
 app.use(session({
   store: redisStore({
@@ -69,7 +68,7 @@ app.use(function *() {
 });
 
 function get() {
-  var session = this.session;
+  const session = this.session;
   session.count = session.count || 0;
   session.count++;
   this.body = session.count;
@@ -88,35 +87,38 @@ function *regenerate() {
 
 app.listen(8080);
 ```
-For more examples, please see the [examples folder of `koa-generic-session`](https://github.com/koajs/generic-session/tree/master/example).
 
 ### Options
 
- - *all [`node_redis`](https://www.npmjs.com/package/redis#options-is-an-object-with-the-following-possible-properties) options* - Useful things include `url`, `host`, `port`, and `path` to the server. Defaults to `127.0.0.1:6379`
- - `db` (number) - will run `client.select(db)` after connection
- - `client` (object) - supply your own client, all other options are ignored unless `duplicate` is also supplied
- - `duplicate` (boolean) - When true, it will run `client.duplicate(options)` on the supplied `client` and use all other options supplied. This is useful if you want to select a different DB for sessions but also want to base from the same client object.
- - `serialize` - Used to serialize the data that is saved into the store.
- - `unserialize` - Used to unserialize the data that is fetched from the store.
- - **DEPRECATED:** old options - `pass` and `socket` have been replaced by `auth_pass` and `path`, but they should be backward compatible (still work).
+- *all [`node_redis`](https://www.npmjs.com/package/redis#options-is-an-object-with-the-following-possible-properties) options* - Useful things include `url`, `host`, `port`, and `path` to the server. Defaults to `127.0.0.1:6379`
+- `db` (number) - will run `client.select(db)` after connection
+- `client` (object) - supply your own client, all other options are ignored unless `duplicate` is also supplied
+- `duplicate` (boolean) - When true, it will run `client.duplicate(options)` on the supplied `client` and use all other options supplied. This is useful if you want to select a different DB for sessions but also want to base from the same client object.
+- `serialize` - Used to serialize the data that is saved into the store.
+- `unserialize` - Used to unserialize the data that is fetched from the store.
+- **DEPRECATED:** old options - `pass` and `socket` have been replaced by `auth_pass` and `path`, but they should be backward compatible (still work).
 
-### Events
+## Events
+
 See the [`node_redis` docs](https://www.npmjs.com/package/redis#connection-events) for more info.
- - `ready`
- - `connect`
- - `reconnecting`
- - `error`
- - `end`
- - `warning`
 
-### API
-These are some the functions that `koa-generic-session` uses that you can use manually. You will need to initialize differently than the example above:
+- `ready`
+- `connect`
+- `reconnecting`
+- `error`
+- `end`
+- `warning`
+
+## API
+
+These are some the functions that `koa-session` uses that you can use manually. You will need to initialize differently than the example above:
+
 ```js
-var session = require('koa-generic-session');
-var redisStore = require('koa-redis')({
+const session = require('koa-session');
+const redisStore = require('koa-redis')({
   // Options specified here
 });
-var app = require('koa')();
+const app = require('koa')();
 
 app.keys = ['keys', 'keykeys'];
 app.use(session({
@@ -124,31 +126,40 @@ app.use(session({
 }));
 ```
 
-#### module([options])
+### module([options])
+
 Initialize the Redis connection with the optionally provided options (see above). *The variable `session` below references this*.
 
 #### session.get(sid)
+
 Generator that gets a session by ID. Returns parsed JSON is exists, `null` if it does not exist, and nothing upon error.
 
-#### session.set(sid, sess, ttl)
+### session.set(sid, sess, ttl)
+
 Generator that sets a JSON session by ID with an optional time-to-live (ttl) in milliseconds. Yields `node_redis`'s `client.set()` or `client.setex()`.
 
-#### session.destroy(sid)
-Generator that destroys a session (removes it from Redis) by ID. Tields `node_redis`'s `client.del()`.
+### session.destroy(sid)
 
-#### session.quit()
+Generator that destroys a session (removes it from Redis) by ID. Yields `node_redis`'s `client.del()`.
+
+### session.quit()
+
 Generator that stops a Redis session after everything in the queue has completed. Yields `node_redis`'s `client.quit()`.
 
 #### session.end()
+
 Alias to `session.quit()`. It is not safe to use the real end function, as it cuts off the queue.
 
-#### session.connected
+### session.connected
+
 Boolean giving the connection status updated using `client.connected` after any of the events above is fired.
 
-#### session.\_redisClient
+### session.\_redisClient
+
 Direct access to the `node_redis` client object.
 
-#### session.client
+### session.client
+
 Direct access to the `co-redis` wrapper around the `node_redis` client.
 
 ## Benchmark
@@ -163,21 +174,16 @@ Direct access to the `co-redis` wrapper around the `node_redis` client.
 Detailed benchmark report [here](https://github.com/koajs/koa-redis/tree/master/benchmark)
 
 ## Testing
-1. Start a Redis server on `localhost:6379`. You can use [`redis-windows`](https://github.com/ServiceStack/redis-windows) if you are on Windows or just want a quick VM-based server.
-2. Clone the repository and run `npm i` in it (Windows should work fine).
-3. If you want to see debug output, turn on the prompt's `DEBUG` flag.
-4. Run `npm test` to run the tests and generate coverage. To run the tests without generating coverage, run `npm run-script test-only`.
+
+1. Start a Redis server on `localhost:6379`. You can use [`redis-windows`](https://github.com/ServiceStack/redis-windows) if you are on Windows or just want a quick VM-based server. Alternatively, if you have both [Docker](https://docs.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) installed, you can run `docker-compose up` to run the Redis server as a docker container.
+1. Clone the repository and run `npm i` in it (Windows should work fine).
+1. If you want to see debug output, turn on the prompts' `DEBUG` flag.
+1. Run `npm test` to run the tests and generate coverage. To run the tests without generating coverage, run `npm run-script test-only`.
 
 ## Authors
+
 See the [contributing tab](https://github.com/koajs/koa-redis/graphs/contributors)
 
-## Licences
-(The MIT License)
+## License
 
-Copyright (c) 2015 dead-horse and other contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+This library is distributed under the terms of the [MIT License](License).
