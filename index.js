@@ -47,10 +47,10 @@ var RedisStore = module.exports = function (options) {
     // client = redis.createClient(options);
     // 
     // Apply ioredis, Add has redis cluster condition：
-    if (!options.isRedisCluster) {
-      client = redis.createClient(options);
-    } else {
+    if (options.isRedisCluster) {
       client = new ioredis.Cluster(options.nodes, {redisOptions: options.redisOptions});
+    } else {
+      client = redis.createClient(options);
     }
   } else {
     if (options.duplicate) {                                         // Duplicate client and update with options provided
