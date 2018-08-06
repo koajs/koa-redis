@@ -16,6 +16,7 @@
 var EventEmitter = require('events').EventEmitter;
 var debug = require('debug')('koa-redis');
 var redis = require('redis');
+var ioredis = require("ioredis");
 var redisWrapper = require('co-redis');
 var util = require('util');
 var wrap = require('co-wrap-all');
@@ -43,7 +44,14 @@ var RedisStore = module.exports = function (options) {
   options.path = options.path || options.socket || null;             // For backwards compatibility
   if (!options.client) {
     debug('Init redis new client');
-    client = redis.createClient(options);
+    // client = redis.createClient(options);
+    // 
+    // Apply ioredis, Add has redis cluster condition：
+    if (!options.isRedisCluster) {
+      client = redis.createClient(options);
+    } else {
+      client = new ioredis.Cluster(options.nodes, {redisOptions: options.redisOptions});
+    }
   } else {
     if (options.duplicate) {                                         // Duplicate client and update with options provided
       debug('Duplicating provided client with new options (if provided)');
