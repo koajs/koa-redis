@@ -25,6 +25,7 @@ var wrap = require('co-wrap-all');
  * Initialize redis session middleware with `opts` (see the README for more info):
  *
  * @param {Object} options
+ *   - {Boolean} isRedisCluster redis is cluster
  *   - {Object} client       redis client (overides all other options except db and duplicate)
  *   - {String} socket       redis connect socket (DEPRECATED: use 'path' instead)
  *   - {String} db           redis db
@@ -47,10 +48,10 @@ var RedisStore = module.exports = function (options) {
     // client = redis.createClient(options);
     // 
     // Apply ioredis, Add has redis cluster condition：
-    if (options.isRedisCluster) {
-      client = new ioredis.Cluster(options.nodes, {redisOptions: options.redisOptions});
-    } else {
+    if (!options.isRedisCluster) {
       client = redis.createClient(options);
+    } else {
+      client = new ioredis.Cluster(options.nodes, {redisOptions: options.redisOptions});
     }
   } else {
     if (options.duplicate) {                                         // Duplicate client and update with options provided
