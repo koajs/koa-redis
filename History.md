@@ -1,4 +1,12 @@
 
+3.1.3 / 2018-10-19
+==================
+
+**others**
+  * [[`703dc7c`](http://github.com/koajs/koa-redis/commit/703dc7c8776b677cc9a53dcaab8eacaa45c671ef)] - chore: use package.files (dead-horse <<dead_horse@qq.com>>)
+  * [[`16222f7`](http://github.com/koajs/koa-redis/commit/16222f78594a5d86560d78f83f866e4cc680c4b5)] - chore: added node@10.x to travis.yml (niftylettuce <<niftylettuce@gmail.com>>)
+  * [[`059476b`](http://github.com/koajs/koa-redis/commit/059476b3cad85ae42625024798fa9dfb18e70262)] - deps: remove hiredis (#48) (snadn <<snadn@snadn.cn>>)
+
 3.1.1 / 2017-09-09
 ==================
 
