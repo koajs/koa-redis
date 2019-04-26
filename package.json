@@ -1,7 +1,7 @@
 {
   "name": "koa-redis",
   "description": "Redis storage for Koa session middleware/cache with Sentinel and Cluster support",
-  "version": "3.1.3",
+  "version": "4.0.0",
   "author": "dead_horse <dead_horse@qq.com>",
   "bugs": {
     "url": "https://github.com/koajs/koa-redis/issues"
