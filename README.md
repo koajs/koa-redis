@@ -18,10 +18,21 @@
 
 * [Install](#install)
 * [Usage](#usage)
-  * [Example](#example)
-  * [Options](#options)
-  * [Events](#events)
-  * [API](#api)
+  * [Basic](#basic)
+  * [Sentinel](#sentinel)
+  * [Cluster](#cluster)
+* [Options](#options)
+* [Events](#events)
+* [API](#api)
+  * [module(options)](#moduleoptions)
+  * [session.get(sid)](#sessiongetsid)
+  * [session.set(sid, sess, ttl)](#sessionsetsid-sess-ttl)
+  * [session.destroy(sid)](#sessiondestroysid)
+  * [session.quit()](#sessionquit)
+  * [session.end()](#sessionend)
+  * [session.connected](#sessionconnected)
+  * [session.\_redisClient](#session_redisclient)
+  * [session.client](#sessionclient)
 * [Benchmark](#benchmark)
 * [Testing](#testing)
 * [License](#license)
@@ -47,11 +58,9 @@ yarn add koa-redis
 
 `koa-redis` works with [koa-generic-session](https://github.com/koajs/generic-session) (a generic session middleware for koa).
 
-### Example
-
 For more examples, please see the [examples folder of `koa-generic-session`](https://github.com/koajs/generic-session/tree/master/example).
 
-#### Basic
+### Basic
 
 ```js
 const session = require('koa-generic-session');
@@ -101,7 +110,7 @@ function *regenerate() {
 app.listen(8080);
 ```
 
-#### Sentinel
+### Sentinel
 
 ```js
 const session = require('koa-generic-session');
@@ -126,7 +135,7 @@ app.use(session({
 // ...
 ```
 
-#### Cluster
+### Cluster
 
 ```js
 const session = require('koa-generic-session');
@@ -164,7 +173,8 @@ app.use(session({
 // ...
 ```
 
-### Options
+
+## Options
 
 * _all [`ioredis`](https://github.com/luin/ioredis/blob/master/API.md#new-redisport-host-options) options_ - Useful things include `url`, `host`, `port`, and `path` to the server. Defaults to `127.0.0.1:6379`
 * `db` (number) - will run `client.select(db)` after connection
@@ -177,7 +187,8 @@ app.use(session({
 * `clusterOptions` (object) - Conditionally used for created a Redi cluster instance when `isRedisCluster` option is `true`, this is the second argument passed to `new Redis.Cluster` and contains options, such as `redisOptions` (see [Cluster docs][cluster] for more info).
 * **DEPRECATED:** old options - `auth_pass` and `pass` have been replaced with `password`, and `socket` has been replaced with `path`, however all of these options are backwards compatible.
 
-### Events
+
+## Events
 
 See the [`ioredis` docs](https://github.com/luin/ioredis#connection-events) for more info.
 
@@ -188,7 +199,8 @@ See the [`ioredis` docs](https://github.com/luin/ioredis#connection-events) for 
 * `end`
 * `warning`
 
-### API
+
+## API
 
 These are some the functions that `koa-generic-session` uses that you can use manually. You will need to initialize differently than the example above:
 
@@ -205,39 +217,39 @@ app.use(session({
 }));
 ```
 
-#### module([options](#options))
+### module([options](#options))
 
 Initialize the Redis connection with the optionally provided options (see above). _The variable `session` below references this_.
 
-#### session.get(sid)
+### session.get(sid)
 
 Generator that gets a session by ID. Returns parsed JSON is exists, `null` if it does not exist, and nothing upon error.
 
-#### session.set(sid, sess, ttl)
+### session.set(sid, sess, ttl)
 
 Generator that sets a JSON session by ID with an optional time-to-live (ttl) in milliseconds. Yields `ioredis`'s `client.set()` or `client.setex()`.
 
-#### session.destroy(sid)
+### session.destroy(sid)
 
 Generator that destroys a session (removes it from Redis) by ID. Tields `ioredis`'s `client.del()`.
 
-#### session.quit()
+### session.quit()
 
 Generator that stops a Redis session after everything in the queue has completed. Yields `ioredis`'s `client.quit()`.
 
-#### session.end()
+### session.end()
 
 Alias to `session.quit()`. It is not safe to use the real end function, as it cuts off the queue.
 
-#### session.connected
+### session.connected
 
 Boolean giving the connection status updated using `client.connected` after any of the events above is fired.
 
-#### session.\_redisClient
+### session.\_redisClient
 
 Direct access to the `ioredis` client object.
 
-#### session.client
+### session.client
 
 Direct access to the `co-redis` wrapper around the `ioredis` client.
 
