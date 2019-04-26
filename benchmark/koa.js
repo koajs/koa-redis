@@ -1,21 +1,26 @@
-var koa = require('koa');
-var session = require('koa-generic-session');
-var redisStore = require('../');
+const koa = require('koa');
+const session = require('koa-generic-session');
+const redisStore = require('..');
 
-var app = koa();
+const app = koa();
 
 app.keys = ['keys', 'keykeys'];
 if (process.argv[2] !== 'nosession') {
-  app.use(session({
-    store: redisStore()
-  }));
+  app.use(
+    session({
+      store: redisStore()
+    })
+  );
 }
 
-app.use(function *() {
+app.use(function() {
   this.session = this.session || {};
   this.session.name = 'koa-redis';
   this.body = this.session.name;
 });
 
-require('http').createServer(app.callback()).listen(8080);
+require('http')
+  .createServer(app.callback())
+  .listen(8080);
+
 console.log('server start listen at 8080');

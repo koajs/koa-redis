@@ -2,6 +2,7 @@ Benchmark
 
 =============
 
+
 ## ENV
 
 ```
@@ -18,18 +19,19 @@ koa-sess@0.0.4
 koa-redis@0.0.2
 ```
 
+
 ## Report
 
 ```
 siege -b -c 50 -t 1M 
 ```
 
-|Server|Transaction rate|Response time|
-|------|----------------|-------------|
-|connect without session|**6763.56 trans/sec**|**0.01 secs**|
-|koa without session|**5684.75 trans/sec**|**0.01 secs**|
-|connect with session|**2759.70 trans/sec**|**0.02 secs**|
-|koa with session|**2355.38 trans/sec**|**0.02 secs**|
+| Server                  | Transaction rate      | Response time |
+| ----------------------- | --------------------- | ------------- |
+| connect without session | **6763.56 trans/sec** | **0.01 secs** |
+| koa without session     | **5684.75 trans/sec** | **0.01 secs** |
+| connect with session    | **2759.70 trans/sec** | **0.02 secs** |
+| koa with session        | **2355.38 trans/sec** | **0.02 secs** |
 
 ### Without Session
 
@@ -73,13 +75,11 @@ Successful transactions:      336992
 Failed transactions:             0
 Longest transaction:          0.03
 Shortest transaction:         0.00
-
 ```
 
 ### With Session
 
 ```
-
 #siege connect
 $ siege -b -c 50 -t 1M http://localhost:8081
 ** SIEGE 2.72
@@ -120,3 +120,11 @@ Failed transactions:             0
 Longest transaction:          0.04
 Shortest transaction:         0.01
 ```
+
+
+## Contributors
+
+| Name           | Website                    |
+| -------------- | -------------------------- |
+| **dead_horse** |                            |
+| **Nick Baugh** | <http://niftylettuce.com/> |

@@ -1,29 +1,22 @@
 {
   "name": "koa-redis",
-  "description": "koa session with redis using koa-generic-session",
-  "repository": "koajs/koa-redis",
+  "description": "Redis storage for Koa session middleware/cache with Sentinel and Cluster support",
+  "version": "3.1.3",
+  "author": "dead_horse <dead_horse@qq.com>",
   "bugs": {
     "url": "https://github.com/koajs/koa-redis/issues"
   },
-  "files": [
-    "index.js"
-  ],
-  "homepage": "https://github.com/koajs/koa-redis",
-  "version": "3.1.3",
-  "main": "index.js",
-  "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha -- --require co-mocha \"test/**/*.test.js\"",
-    "test-only": "mocha --require co-mocha \"test/**/*.test.js\"",
-    "autod": "autod -w --prefix=^ --keep=koa -D co-mocha,mocha,istanbul,autod"
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
-  "keywords": [
-    "koa",
-    "middleware",
-    "session",
-    "redis"
+  "contributors": [
+    "dead_horse <dead_horse@qq.com>",
+    "Nick Baugh <niftylettuce@gmail.com> (http://niftylettuce.com/)"
   ],
-  "author": "dead_horse <dead_horse@qq.com>",
   "dependencies": {
+    "@babel/runtime": "^7.4.3",
     "co-redis": "^2.1.1",
     "co-wrap-all": "^1.0.0",
     "debug": "^4.1.1",
@@ -31,18 +24,121 @@
     "redis": "^2.8.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@commitlint/cli": "^7.5.2",
+    "@commitlint/config-conventional": "^7.5.0",
     "autod": "^3.1.0",
     "co-mocha": "^1.2.2",
     "connect": "^3.6.6",
     "connect-redis": "^3.4.1",
+    "eslint": "^5.16.0",
+    "eslint-config-xo-lass": "^1.0.3",
+    "eslint-plugin-node": "^8.0.1",
+    "fixpack": "^2.3.1",
+    "husky": "^2.1.0",
     "istanbul": "^0.4.5",
     "koa": "^2.7.0",
     "koa-generic-session": "^2.0.1",
-    "mocha": "^3.5.3",
-    "should": "^13.2.3"
+    "lint-staged": "^8.1.5",
+    "mocha": "3.5.3",
+    "remark-cli": "^6.0.1",
+    "remark-preset-github": "^0.0.13",
+    "rimraf": "^2.6.3",
+    "should": "^13.2.3",
+    "xo": "^0.24.0"
   },
   "engines": {
     "node": ">= 4"
   },
-  "license": "MIT"
+  "files": [
+    "lib"
+  ],
+  "homepage": "https://github.com/koajs/koa-redis",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "keywords": [
+    "cache",
+    "caching",
+    "client",
+    "clients",
+    "cluster",
+    "clustering",
+    "clusters",
+    "express",
+    "ioredis",
+    "koa",
+    "middleware",
+    "multiple",
+    "node",
+    "nodes",
+    "redis",
+    "scale",
+    "sentinal",
+    "sentinals",
+    "sentinel",
+    "sentinels",
+    "session",
+    "storage",
+    "store"
+  ],
+  "license": "MIT",
+  "lint-staged": {
+    "linters": {
+      "*.js": [
+        "xo --fix",
+        "git add"
+      ],
+      "*.md": [
+        "remark . -qfo",
+        "git add"
+      ],
+      "package.json": [
+        "fixpack",
+        "git add"
+      ]
+    }
+  },
+  "main": "lib/index.js",
+  "prettier": {
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "trailingComma": "none"
+  },
+  "remarkConfig": {
+    "plugins": [
+      "preset-github"
+    ]
+  },
+  "repository": "koajs/koa-redis",
+  "scripts": {
+    "autod": "autod -w --prefix=^ --keep=koa -D co-mocha,mocha,istanbul,autod",
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf lib",
+    "build:lib": "babel src --out-dir lib",
+    "lint": "xo && remark . -qfo && eslint lib",
+    "test": "npm run build && npm run lint && istanbul cover node_modules/mocha/bin/_mocha -- --require co-mocha \"test/**/*.test.js\"",
+    "test-only": "mocha --require co-mocha \"test/**/*.test.js\""
+  },
+  "xo": {
+    "prettier": true,
+    "space": true,
+    "extends": [
+      "xo-lass"
+    ],
+    "overrides": [
+      {
+        "files": "test/**/*.js",
+        "envs": [
+          "mocha"
+        ]
+      }
+    ]
+  }
 }
