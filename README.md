@@ -13,6 +13,8 @@
 
 [![NPM](https://nodei.co/npm/koa-redis.svg?downloads=true)](https://nodei.co/npm/koa-redis/)
 
+**v4.0.0+ now uses `ioredis` and has support for Sentinel and Cluster!**
+
 
 ## Table of Contents
 
@@ -30,8 +32,8 @@
   * [session.destroy(sid)](#sessiondestroysid)
   * [session.quit()](#sessionquit)
   * [session.end()](#sessionend)
+  * [session.status](#sessionstatus)
   * [session.connected](#sessionconnected)
-  * [session.\_redisClient](#session_redisclient)
   * [session.client](#sessionclient)
 * [Benchmark](#benchmark)
 * [Testing](#testing)
@@ -179,7 +181,7 @@ app.use(session({
 * _all [`ioredis`](https://github.com/luin/ioredis/blob/master/API.md#new-redisport-host-options) options_ - Useful things include `url`, `host`, `port`, and `path` to the server. Defaults to `127.0.0.1:6379`
 * `db` (number) - will run `client.select(db)` after connection
 * `client` (object) - supply your own client, all other options are ignored unless `duplicate` is also supplied
-* `duplicate` (boolean) - When true, it will run `client.duplicate(options)` on the supplied `client` and use all other options supplied. This is useful if you want to select a different DB for sessions but also want to base from the same client object.
+* `duplicate` (boolean) - When true, it will run `client.duplicate()` on the supplied `client` and use all other options supplied. This is useful if you want to select a different DB for sessions but also want to base from the same client object.
 * `serialize` - Used to serialize the data that is saved into the store.
 * `unserialize` - Used to unserialize the data that is fetched from the store.
 * `isRedisCluster` (boolean) - Used for creating a Redis cluster instance per [`ioredis`][cluster] Cluster options, if set to `true`, then a new Redis cluster will be instantiated with `new Redis.Cluster(options.nodes, options.clusterOptions)` (see [Cluster docs][cluster] for more info).
@@ -192,12 +194,7 @@ app.use(session({
 
 See the [`ioredis` docs](https://github.com/luin/ioredis#connection-events) for more info.
 
-* `ready`
-* `connect`
-* `reconnecting`
-* `error`
-* `end`
-* `warning`
+**Note that as of v4.0.0 the `disconnect` and `warning` events are removed as `ioredis` does not support them.   The `disconnect` event is deprecated, although it is still emitted when `end` events are emitted.**
 
 
 ## API
@@ -241,17 +238,17 @@ Generator that stops a Redis session after everything in the queue has completed
 
 Alias to `session.quit()`. It is not safe to use the real end function, as it cuts off the queue.
 
+### session.status
+
+String giving the connection status updated using `client.status`.
+
 ### session.connected
 
-Boolean giving the connection status updated using `client.connected` after any of the events above is fired.
-
-### session.\_redisClient
-
-Direct access to the `ioredis` client object.
+Boolean giving the connection status updated using `client.status` after any of the events above is fired.
 
 ### session.client
 
-Direct access to the `co-redis` wrapper around the `ioredis` client.
+Direct access to the `ioredis` client object.
 
 
 ## Benchmark

@@ -17,11 +17,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "co-redis": "^2.1.1",
     "co-wrap-all": "^1.0.0",
     "debug": "^4.1.1",
-    "ioredis": "^4.9.0",
-    "redis": "^2.8.0"
+    "ioredis": "^4.9.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",

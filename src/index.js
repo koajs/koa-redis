@@ -15,7 +15,6 @@ const util = require('util');
 const { EventEmitter } = require('events');
 const debug = require('debug')('koa-redis');
 const Redis = require('ioredis');
-const redisWrapper = require('co-redis');
 const wrap = require('co-wrap-all');
 
 /**
@@ -44,14 +43,19 @@ function RedisStore(options) {
     options.password || options.auth_pass || options.pass || null; // For backwards compatibility
   options.path = options.path || options.socket || null; // For backwards compatibility
   if (!options.client) {
-    debug('Init redis new client');
     //
     // TODO: we should probably omit custom options we have
     // in this lib from `options` passed to instances below
     //
     if (options.isRedisCluster) {
+      debug('Initializing Redis Cluster');
+      delete options.isRedisCluster;
       client = new Redis.Cluster(options.nodes, options.clusterOptions);
     } else {
+      debug('Initializing Redis');
+      delete options.isRedisCluster;
+      delete options.nodes;
+      delete options.clusterOptions;
       client = new Redis(options);
     }
   } else if (options.duplicate) {
@@ -76,47 +80,29 @@ function RedisStore(options) {
     });
   }
 
-  client.on('error', this.emit.bind(this, 'error'));
-  client.on('end', this.emit.bind(this, 'end'));
-  client.on('end', this.emit.bind(this, 'disconnect')); // For backwards compatibility
-  client.on('connect', this.emit.bind(this, 'connect'));
-  client.on('reconnecting', this.emit.bind(this, 'reconnecting'));
-  client.on('ready', this.emit.bind(this, 'ready'));
-  client.on('warning', this.emit.bind(this, 'warning'));
-  this.on('connect', function() {
-    debug('connected to redis');
-    this.connected = client.connected;
-  });
-  this.on('ready', () => {
-    debug('redis ready');
-  });
-  this.on('end', function() {
-    debug('redis ended');
-    this.connected = client.connected;
-  });
-  // No good way to test error
-  /* istanbul ignore next */
-  this.on('error', function() {
-    debug('redis error');
-    this.connected = client.connected;
-  });
-  // No good way to test reconnect
-  /* istanbul ignore next */
-  this.on('reconnecting', function() {
-    debug('redis reconnecting');
-    this.connected = client.connected;
-  });
-  // No good way to test warning
-  /* istanbul ignore next */
-  this.on('warning', function() {
-    debug('redis warning');
-    this.connected = client.connected;
+  ['connect', 'ready', 'error', 'close', 'reconnecting', 'end'].forEach(
+    name => {
+      this.on(name, () => debug(`redis ${name}`));
+      client.on(name, this.emit.bind(this, name));
+    }
+  );
+
+  // For backwards compatibility
+  client.on('end', this.emit.bind(this, 'disconnect'));
+
+  this.client = client;
+
+  Object.defineProperty(this, 'status', {
+    get() {
+      return this.client.status;
+    }
   });
 
-  // Wrap redis
-  this._redisClient = client;
-  this.client = redisWrapper(client);
-  this.connected = client.connected;
+  Object.defineProperty(this, 'connected', {
+    get() {
+      return ['connect', 'ready'].includes(this.status);
+    }
+  });
 
   // Support optional serialize and unserialize
   this.serialize =

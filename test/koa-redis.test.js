@@ -12,8 +12,7 @@
  */
 
 const should = require('should');
-const redis = require('redis');
-const redisWrapper = require('co-redis');
+const Redis = require('ioredis');
 
 function event(object, name) {
   // Convert events to promises
@@ -24,7 +23,7 @@ function event(object, name) {
 
 describe('test/koa-redis.test.js', () => {
   it('should connect and ready with external client and quit ok', function*() {
-    const store = require('..')({ client: redis.createClient() });
+    const store = require('..')({ client: new Redis() });
     yield event(store, 'connect');
     store.connected.should.eql(true);
     yield event(store, 'ready');
@@ -35,7 +34,7 @@ describe('test/koa-redis.test.js', () => {
 
   it('should connect and ready with duplicated external client and disconnect ok', function*() {
     const store = require('..')({
-      client: redis.createClient(),
+      client: new Redis(),
       duplicate: true
     });
     yield event(store, 'connect');
@@ -48,9 +47,8 @@ describe('test/koa-redis.test.js', () => {
 
   it('should set and delete with db ok', function*() {
     const store = require('..')({ db: 2 });
-    let client = redis.createClient();
+    const client = new Redis();
     client.select(2);
-    client = redisWrapper(client);
     yield store.set('key:db1', { a: 2 });
     (yield store.get('key:db1')).should.eql({ a: 2 });
     JSON.parse(yield client.get('key:db1')).should.eql({ a: 2 });
