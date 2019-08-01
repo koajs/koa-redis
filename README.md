@@ -58,14 +58,14 @@ yarn add koa-redis
 
 ## Usage
 
-`koa-redis` works with [koa-generic-session](https://github.com/koajs/generic-session) (a generic session middleware for koa).
+`koa-redis` works with [koa-session](https://github.com/koajs/session) (a basic session middleware for koa).
 
-For more examples, please see the [examples folder of `koa-generic-session`](https://github.com/koajs/generic-session/tree/master/example).
+For more examples, please see the [examples folder of `koa-session`](https://github.com/koajs/session/tree/master/example).
 
 ### Basic
 
 ```js
-const session = require('koa-generic-session');
+const session = require('koa-session');
 const redisStore = require('koa-redis');
 const koa = require('koa');
 
@@ -75,7 +75,7 @@ app.use(session({
   store: redisStore({
     // Options specified here
   })
-}));
+}, app));
 
 app.use(function *() {
   switch (this.path) {
@@ -115,7 +115,7 @@ app.listen(8080);
 ### Sentinel
 
 ```js
-const session = require('koa-generic-session');
+const session = require('koa-session');
 const redisStore = require('koa-redis');
 const koa = require('koa');
 
@@ -132,7 +132,7 @@ app.use(session({
     ],
     name: 'mymaster'
   })
-}));
+}, app));
 
 // ...
 ```
@@ -140,7 +140,7 @@ app.use(session({
 ### Cluster
 
 ```js
-const session = require('koa-generic-session');
+const session = require('koa-session');
 const redisStore = require('koa-redis');
 const koa = require('koa');
 
@@ -170,7 +170,7 @@ app.use(session({
       }
     }
   })
-}));
+}, app));
 
 // ...
 ```
@@ -199,10 +199,10 @@ See the [`ioredis` docs](https://github.com/luin/ioredis#connection-events) for 
 
 ## API
 
-These are some the functions that `koa-generic-session` uses that you can use manually. You will need to initialize differently than the example above:
+These are some the functions that `koa-session` uses that you can use manually. You will need to initialize differently than the example above:
 
 ```js
-const session = require('koa-generic-session');
+const session = require('koa-session');
 const redisStore = require('koa-redis')({
   // Options specified here
 });
@@ -211,7 +211,7 @@ const app = require('koa')();
 app.keys = ['keys', 'keykeys'];
 app.use(session({
   store: redisStore
-}));
+}, app));
 ```
 
 ### module([options](#options))

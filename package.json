@@ -39,7 +39,7 @@
     "husky": "^2.1.0",
     "istanbul": "^0.4.5",
     "koa": "^2.7.0",
-    "koa-generic-session": "^2.0.1",
+    "koa-session": "^5.12.2",
     "lint-staged": "^8.1.5",
     "mocha": "3.5.3",
     "remark-cli": "^6.0.1",
