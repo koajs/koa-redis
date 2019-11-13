@@ -60,17 +60,18 @@ yarn add koa-redis
 
 `koa-redis` works with [koa-session](https://github.com/koajs/session) (a basic session middleware for koa).
 
-For more examples, please see the [examples folder of `koa-session`](https://github.com/koajs/session/tree/master/example).
+For more examples, please see the [examples folder of `koa-session`](https://github.com/koajs/session/blob/master/Readme.md#example).
 
 ### Basic
 
 ```js
 const session = require('koa-session');
 const redisStore = require('koa-redis');
+const Keygrip = require('keygrip');
 const koa = require('koa');
 
 const app = koa();
-app.keys = ['keys', 'keykeys'];
+app.keys = new Keygrip(['insert 64 bytes random string', 'insert another 64 bytes random string'], 'sha512', 'base64');
 app.use(session({
   store: redisStore({
     // Options specified here
@@ -117,10 +118,11 @@ app.listen(8080);
 ```js
 const session = require('koa-session');
 const redisStore = require('koa-redis');
+const Keygrip = require('keygrip');
 const koa = require('koa');
 
 const app = koa();
-app.keys = ['keys', 'keykeys'];
+app.keys = new Keygrip(['insert 64 bytes random string', 'insert another 64 bytes random string'], 'sha512', 'base64');
 app.use(session({
   store: redisStore({
     // Options specified here
@@ -142,10 +144,11 @@ app.use(session({
 ```js
 const session = require('koa-session');
 const redisStore = require('koa-redis');
+const Keygrip = require('keygrip');
 const koa = require('koa');
 
 const app = koa();
-app.keys = ['keys', 'keykeys'];
+app.keys = new Keygrip(['insert 64 bytes random string', 'insert another 64 bytes random string'], 'sha512', 'base64');
 app.use(session({
   store: redisStore({
     // Options specified here
@@ -206,9 +209,10 @@ const session = require('koa-session');
 const redisStore = require('koa-redis')({
   // Options specified here
 });
+const Keygrip = require('keygrip');
 const app = require('koa')();
 
-app.keys = ['keys', 'keykeys'];
+app.keys = new Keygrip(['insert 64 bytes random string', 'insert another 64 bytes random string'], 'sha512');
 app.use(session({
   store: redisStore
 }, app));
