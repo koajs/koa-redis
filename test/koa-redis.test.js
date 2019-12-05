@@ -45,6 +45,18 @@ describe('test/koa-redis.test.js', () => {
     store.connected.should.eql(false);
   });
 
+  it('should connect and ready with url and quit ok', function*() {
+    const store = require('..')({
+      url: 'redis://localhost:6379/'
+    });
+    yield event(store, 'connect');
+    store.connected.should.eql(true);
+    yield event(store, 'ready');
+    yield store.quit();
+    yield event(store, 'end');
+    store.connected.should.eql(false);
+  });
+
   it('should set and delete with db ok', function*() {
     const store = require('..')({ db: 2 });
     const client = new Redis();

@@ -42,11 +42,15 @@ function RedisStore(options) {
   options.password =
     options.password || options.auth_pass || options.pass || null; // For backwards compatibility
   options.path = options.path || options.socket || null; // For backwards compatibility
+
   if (!options.client) {
     //
     // TODO: we should probably omit custom options we have
     // in this lib from `options` passed to instances below
     //
+    const redisUrl = options.url && options.url.toString();
+    delete options.url;
+
     if (options.isRedisCluster) {
       debug('Initializing Redis Cluster');
       delete options.isRedisCluster;
@@ -56,7 +60,7 @@ function RedisStore(options) {
       delete options.isRedisCluster;
       delete options.nodes;
       delete options.clusterOptions;
-      client = new Redis(options);
+      client = redisUrl ? new Redis(redisUrl, options) : new Redis(options);
     }
   } else if (options.duplicate) {
     // Duplicate client and update with options provided
