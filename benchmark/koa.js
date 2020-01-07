@@ -1,18 +1,15 @@
-const Koa = require('koa');
-const session = require('koa-session');
-const redisStore = require('../src');
+const koa = require('koa');
+const session = require('koa-generic-session');
+const redisStore = require('..');
 
-const app = new Koa();
+const app = koa();
 
 app.keys = ['keys', 'keykeys'];
 if (process.argv[2] !== 'nosession') {
   app.use(
-    session(
-      {
-        store: redisStore()
-      },
-      app
-    )
+    session({
+      store: redisStore()
+    })
   );
 }
 
