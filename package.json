@@ -52,7 +52,7 @@
     "ioredis": "5.x"
   },
   "engines": {
-    "node": ">= 14"
+    "node": ">= 12.22.0"
   },
   "files": [
     "lib"
