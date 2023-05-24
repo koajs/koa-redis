@@ -1,9 +1,14 @@
 const should = require('should');
 
+// allow the default url to be overriden for local testing
+const redisUrl = process.env.REDIS_URL
+  ? process.env.REDIS_URL
+  : 'redis://localhost:6379/';
+
 if (parseFloat(process.version.slice(1)) >= 7.6) {
   describe('test/async.test.js', function() {
     it('should set with ttl ok', async () => {
-      const store = require('..')();
+      const store = require('..')({ url: redisUrl });
       await store.set('key:ttl', { a: 1 }, 86400000);
       (await store.get('key:ttl')).should.eql({ a: 1 });
       (await store.client.ttl('key:ttl')).should.equal(86400);
@@ -11,14 +16,14 @@ if (parseFloat(process.version.slice(1)) >= 7.6) {
     });
 
     it('should not throw error with bad JSON', async () => {
-      const store = require('..')();
+      const store = require('..')({ url: redisUrl });
       await store.client.set('key:badKey', '{I will cause an error!}');
       should.not.exist(await store.get('key:badKey'));
       await store.quit();
     });
 
     it('should set without ttl ok', async () => {
-      const store = require('..')();
+      const store = require('..')({ url: redisUrl });
       await store.set('key:nottl', { a: 1 });
       (await store.get('key:nottl')).should.eql({ a: 1 });
       (await store.client.ttl('key:nottl')).should.equal(-1);
@@ -26,7 +31,7 @@ if (parseFloat(process.version.slice(1)) >= 7.6) {
     });
 
     it('should destroy ok', async () => {
-      const store = require('..')();
+      const store = require('..')({ url: redisUrl });
       await store.destroy('key:nottl');
       await store.destroy('key:ttl');
       await store.destroy('key:badKey');
@@ -44,7 +49,7 @@ if (parseFloat(process.version.slice(1)) >= 7.6) {
         });
       }
 
-      const store = require('..')();
+      const store = require('..')({ url: redisUrl });
       await store.set('key:ttl2', { a: 1, b: 2 }, 1000);
       await sleep(1200); // Some odd delay introduced by co-mocha
       should.not.exist(await store.get('key:ttl2'));

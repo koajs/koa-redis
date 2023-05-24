@@ -18,8 +18,7 @@
   "dependencies": {
     "@babel/runtime": "^7.8.3",
     "co-wrap-all": "^1.0.0",
-    "debug": "^4.1.1",
-    "ioredis": "^4.14.1"
+    "debug": "^4.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -46,10 +45,14 @@
     "remark-preset-github": "^0.0.16",
     "rimraf": "^3.0.0",
     "should": "^13.2.3",
-    "xo": "^0.25.3"
+    "xo": "^0.25.3",
+    "ioredis": "^5.2.4"
+  },
+  "peerDependencies": {
+    "ioredis": "5.x"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 12.22.0"
   },
   "files": [
     "lib"

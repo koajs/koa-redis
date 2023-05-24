@@ -14,6 +14,11 @@
 const should = require('should');
 const Redis = require('ioredis');
 
+// allow the default url to be overriden for local testing
+const redisUrl = process.env.REDIS_URL
+  ? process.env.REDIS_URL
+  : 'redis://localhost:6379/';
+
 function event(object, name) {
   // Convert events to promises
   return new Promise(resolve => {
@@ -23,7 +28,7 @@ function event(object, name) {
 
 describe('test/koa-redis.test.js', () => {
   it('should connect and ready with external client and quit ok', function*() {
-    const store = require('..')({ client: new Redis() });
+    const store = require('..')({ client: new Redis(redisUrl) });
     yield event(store, 'connect');
     store.connected.should.eql(true);
     yield event(store, 'ready');
@@ -34,7 +39,7 @@ describe('test/koa-redis.test.js', () => {
 
   it('should connect and ready with duplicated external client and disconnect ok', function*() {
     const store = require('..')({
-      client: new Redis(),
+      client: new Redis(redisUrl),
       duplicate: true
     });
     yield event(store, 'connect');
@@ -47,7 +52,7 @@ describe('test/koa-redis.test.js', () => {
 
   it('should connect and ready with url and quit ok', function*() {
     const store = require('..')({
-      url: 'redis://localhost:6379/'
+      url: redisUrl
     });
     yield event(store, 'connect');
     store.connected.should.eql(true);
@@ -58,8 +63,8 @@ describe('test/koa-redis.test.js', () => {
   });
 
   it('should set and delete with db ok', function*() {
-    const store = require('..')({ db: 2 });
-    const client = new Redis();
+    const store = require('..')({ db: 2, url: redisUrl });
+    const client = new Redis(redisUrl);
     client.select(2);
     yield store.set('key:db1', { a: 2 });
     (yield store.get('key:db1')).should.eql({ a: 2 });
@@ -71,7 +76,7 @@ describe('test/koa-redis.test.js', () => {
   });
 
   it('should set with ttl ok', function*() {
-    const store = require('..')();
+    const store = require('..')({ url: redisUrl });
     yield store.set('key:ttl', { a: 1 }, 86400000);
     (yield store.get('key:ttl')).should.eql({ a: 1 });
     (yield store.client.ttl('key:ttl')).should.equal(86400);
@@ -79,7 +84,7 @@ describe('test/koa-redis.test.js', () => {
   });
 
   it('should not throw error with bad JSON', function*() {
-    const store = require('..')();
+    const store = require('..')({ url: redisUrl });
     yield store.client.set('key:badKey', '{I will cause an error!}');
     should.not.exist(yield store.get('key:badKey'));
     yield store.quit();
@@ -88,7 +93,8 @@ describe('test/koa-redis.test.js', () => {
   it('should use default JSON.parse/JSON.stringify without serialize/unserialize function', function*() {
     const store = require('..')({
       serialize: 'Not a function',
-      unserialize: 'Not a function'
+      unserialize: 'Not a function',
+      url: redisUrl
     });
     yield store.set('key:notserialized', { a: 1 });
     (yield store.get('key:notserialized')).should.eql({ a: 1 });
@@ -98,7 +104,8 @@ describe('test/koa-redis.test.js', () => {
   it('should parse bad JSON with custom unserialize function', function*() {
     const store = require('..')({
       serialize: value => 'JSON:' + JSON.stringify(value),
-      unserialize: value => JSON.parse(value.slice(5))
+      unserialize: value => JSON.parse(value.slice(5)),
+      url: redisUrl
     });
     yield store.set('key:notserialized', { a: 1 });
     (yield store.get('key:notserialized')).should.eql({ a: 1 });
@@ -106,7 +113,7 @@ describe('test/koa-redis.test.js', () => {
   });
 
   it('should set without ttl ok', function*() {
-    const store = require('..')();
+    const store = require('..')({ url: redisUrl });
     yield store.set('key:nottl', { a: 1 });
     (yield store.get('key:nottl')).should.eql({ a: 1 });
     (yield store.client.ttl('key:nottl')).should.equal(-1);
@@ -114,7 +121,7 @@ describe('test/koa-redis.test.js', () => {
   });
 
   it('should destroy ok', function*() {
-    const store = require('..')();
+    const store = require('..')({ url: redisUrl });
     yield store.destroy('key:nottl');
     yield store.destroy('key:ttl');
     yield store.destroy('key:badKey');
@@ -132,7 +139,7 @@ describe('test/koa-redis.test.js', () => {
       });
     }
 
-    const store = require('..')();
+    const store = require('..')({ url: redisUrl });
     yield store.set('key:ttl2', { a: 1, b: 2 }, 1000);
     yield sleep(1200); // Some odd delay introduced by co-mocha
     should.not.exist(yield store.get('key:ttl2'));
