@@ -18,7 +18,7 @@
   "dependencies": {
     "@babel/runtime": "^7.8.3",
     "co-wrap-all": "^1.0.0",
-    "debug": "^4.1.1",
+    "debug": "^4.3.1",
     "ioredis": "^4.14.1"
   },
   "devDependencies": {
